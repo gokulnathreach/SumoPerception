@@ -1,0 +1,27 @@
+SUMO
+----
+----
+We use the simulation to get an fcd output, a trace file in a SUMO-format. 
+This file will be later converted into a trace file for one of the applications supported by Tools/TraceExporter. 
+We generate an fcd output as following:
+
+$sumo -c FileName.sumo.cfg --fcd-output FileName.xml
+
+sumo -c high-54veh-Tsim1000-lanes2-ways2-seed1.sumo.cfg --fcd-output sumoTrace.xml
+sumo -c FileName.sumo.cfg --fcd-output sumoTrace.xml --device.fcd.period 0.1
+
+
+
+And we will obtain the file "sumoTrace.xml".
+
+convert sumoTrace.xml → sumoTrace.mat (best for MATLAB),
+
+Step1: Python
+python traceExporter.py sumoTrace.xml sumoTrace.csv
+python traceExporter.py --in sumoTrace.xml --out sumoTrace.csv
+$./traceExporter.py --in sumoTrace.xml --out sumoTrace.csv
+
+Step2: MATLAB
+traceTable = readtable("sumoTrace.csv");
+save("sumoTrace.mat","traceTable");
+
