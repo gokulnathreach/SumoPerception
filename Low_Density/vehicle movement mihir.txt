@@ -1,0 +1,48 @@
+
+clear; clc; close all;
+
+% ----- Time instants (same as image) -----
+timeList = [601.4 601.5 601.6 601.7 601.8 601.9];
+
+% ----- Lane center positions (fixed like SUMO) -----
+lanesY = [-5 -2 2 5 8];   % 5 lanes
+
+% ----- Base x positions (vehicle spacing) -----
+xBase = linspace(1520, 1980, 10);  % vehicles per lane
+
+% ----- Vehicle speed (m per 0.1s) -----
+dx_per_step = 8;   % small forward movement
+
+for i = 1:length(timeList)
+
+    t = timeList(i);
+
+    x_all = [];
+    y_all = [];
+
+    for lane = 1:length(lanesY)
+
+        % Forward motion with time
+        x = xBase + (i-1)*dx_per_step;
+
+        % Small deterministic offset (like SUMO noise)
+        x = x + (lane-3)*1.5;
+
+        y = lanesY(lane) * ones(size(x));
+
+        x_all = [x_all x];
+        y_all = [y_all y];
+    end
+
+    % ----- Plot -----
+    figure
+    scatter(x_all, y_all, 40, 'filled')
+    grid on
+
+    xlabel('x (m)')
+    ylabel('y (m)')
+    title(sprintf('Vehicle positions, t = %.2f s (x in [1500, 2000])', t))
+
+    xlim([1500 2000])
+    ylim([-8 9])
+end
