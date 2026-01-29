@@ -12,16 +12,7 @@ sumo -c FileName.sumo.cfg --fcd-output sumoTrace.xml --device.fcd.period 0.1
 
 
 
-And we will obtain the file "sumoTrace.xml".
-
-convert sumoTrace.xml → sumoTrace.mat (best for MATLAB),
-
-Step1: Python
-python traceExporter.py sumoTrace.xml sumoTrace.csv
-python traceExporter.py --in sumoTrace.xml --out sumoTrace.csv
-$./traceExporter.py --in sumoTrace.xml --out sumoTrace.csv
-
-Step2: MATLAB
-traceTable = readtable("sumoTrace.csv");
-save("sumoTrace.mat","traceTable");
-
+To directly generate csv file use the following command
+sumo -c high-54veh-Tsim1000-lanes2-ways2-seed1.sumo.cfg --fcd-output sumoTrace.csv --device.fcd.period 0.1
+Running this command with the csv log with the following labels:
+"timestep_time;vehicle_id;vehicle_x;vehicle_y;vehicle_angle;vehicle_type;vehicle_speed;vehicle_pos;vehicle_lane;vehicle_edge;vehicle_slope"
